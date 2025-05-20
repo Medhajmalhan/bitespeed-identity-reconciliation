@@ -9,6 +9,14 @@ const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public'))); // ← serve HTML from here
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+console.log("Initializing server...");
+console.log("Static path:", path.join(__dirname, 'public'));
+console.log("PORT:", port);
+
 
 app.post('/identify', async (req, res) => {
   try {
