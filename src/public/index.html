@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Identity Reconciliation UI</title>
+  <style>
+    body { font-family: sans-serif; margin: 2rem; }
+    textarea, pre { width: 100%; height: 200px; font-size: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>🧪 Payload Submission</h1>
+  <form id="json-form">
+    <label for="json-input">Enter JSON Payload:</label><br>
+    <textarea id="json-input">{ "email": "test@example.com", "phoneNumber": "1234567890" }</textarea><br><br>
+    <button type="submit">Submit</button>
+  </form>
+  <h2>📦 Response:</h2>
+  <pre id="response-output"></pre>
+
+  <script>
+    const form = document.getElementById('json-form');
+    const output = document.getElementById('response-output');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const payload = JSON.parse(document.getElementById('json-input').value);
+      try {
+        const res = await fetch('/identify', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        output.textContent = JSON.stringify(data, null, 2);
+      } catch (err) {
+        output.textContent = 'Error: ' + err.message;
+      }
+    });
+  </script>
+</body>
+</html>
