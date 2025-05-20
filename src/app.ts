@@ -4,7 +4,8 @@ import bodyParser from 'body-parser';
 import { processIdentity } from './services/identity.service'; // Update path if needed
 
 const app = express();
-const PORT = 3000;
+const port = process.env.PORT || 3000;
+
 
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public'))); // ← serve HTML from here
@@ -20,6 +21,6 @@ app.post('/identify', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(` Server running at http://localhost:${PORT}`);
+app.listen(port, () => {
+  console.log(` Server running at http://localhost:${port}`);
 });
